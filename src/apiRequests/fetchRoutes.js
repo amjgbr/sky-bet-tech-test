@@ -1,4 +1,4 @@
-import {fetchRoutesPending, fetchRoutesSuccess, fetchRoutesError} from '../actions/routesAction';
+import {fetchRoutesPending, fetchRoutesSuccess, fetchRoutesError} from '../actions/routes';
 import { BASE_URL } from '../constants';
 
 function fetchRoutes() {
@@ -10,8 +10,6 @@ function fetchRoutes() {
             if(res.error) {
                 throw(res.error);
             }
-            // modifying to show more sports
-
             dispatch(fetchRoutesSuccess(res.routes));
             return res.routes;
         })

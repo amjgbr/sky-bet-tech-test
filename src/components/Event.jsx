@@ -3,7 +3,6 @@ import {withRouter} from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import { wsGetEvent } from '../actions/websocket';
 
 import { useStyles } from '../assets/styles/styles';
 
@@ -35,18 +34,12 @@ const getBetStatus = (obj) => {
   return status
 }
 
-export const Event = withRouter(({sport, eventId, history}) => {
+export const Event = withRouter(({match, eventId, history}) => {
+    const sport = match.params.sport;
     const [eventDetails, setEventDetails] = useState({})
-    const sportEvents = useSelector(state => state.sportEvents.data);
-    const websocket = useSelector(state => state.websocket);
+    const sportEvents = useSelector(state => state.sportEvents.data[sport]);
     const classes = useStyles();
     const dispatch = useDispatch();
-
-  useEffect(() => {
-    if(websocket.type === 'INIT') {
-      dispatch(wsGetEvent(eventId))
-    }
-  }, [websocket, dispatch, eventId]);
 
   useEffect(() => {
     if(sportEvents) {
@@ -58,23 +51,26 @@ export const Event = withRouter(({sport, eventId, history}) => {
   if (!Object.keys(eventDetails).length) {
       return null;
   }
-  console.log(eventDetails?.markets?.length)
-  return (
-    <TableRow 
-        className={
-            eventDetails?.markets?.length ? classes.tableRowClick : ''
-        } 
-        onClick={() => 
-            eventDetails?.markets?.length > 0 && 
-            history.push({pathname: `/${sport}/${eventId}`, state: {markets: eventDetails?.markets}})
-        }
-    >
-        <TableCell >{eventDetails.name}</TableCell>
-        <TableCell align="right">{eventDetails.className}</TableCell>
-        <TableCell align="right">{eventDetails.typeName}</TableCell>
-        <TableCell align="right">{eventDetails.startTime}</TableCell>
-        <TableCell align="right">{getEventStatus(eventDetails.status)}</TableCell>
-        <TableCell align="right">{getBetStatus(eventDetails.status)}</TableCell>
-    </TableRow>
-  );
+
+    if(eventDetails?.status?.displayable) {
+        return (
+            <TableRow 
+                className={
+                    eventDetails?.markets?.length ? classes.tableRowClick : ''
+                } 
+                onClick={() => 
+                    eventDetails?.markets?.length > 0 && 
+                    history.push({pathname: `/${sport}/${eventId}`, state: {markets: eventDetails?.markets}})
+                }
+            >
+                <TableCell >{eventDetails.name} - {eventDetails.eventId}</TableCell>
+                <TableCell align="right">{eventDetails.className}</TableCell>
+                <TableCell align="right">{eventDetails.typeName}</TableCell>
+                <TableCell align="right">{eventDetails.startTime}</TableCell>
+                <TableCell align="right">{getEventStatus(eventDetails.status)}</TableCell>
+                <TableCell align="right">{getBetStatus(eventDetails.status)}</TableCell>
+            </TableRow>
+        );
+    }
+    return null;
 })

@@ -7,11 +7,12 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
-    switch(action.type) {
-        case FETCH_ROUTES_PENDING: 
+    switch (action.type) {
+        case FETCH_ROUTES_PENDING:
             return {
                 ...state,
-                pending: true
+                pending: true,
+                error: null
             }
         case FETCH_ROUTES_SUCCESS:
             return {
@@ -25,11 +26,7 @@ export default (state = initialState, action) => {
                 pending: false,
                 error: action.error
             }
-        default: 
+        default:
             return state;
     }
 }
-
-export const getRoutes = state => state.data;
-export const getRoutesPending = state => state.pending;
-export const getRoutesError = state => state.error;

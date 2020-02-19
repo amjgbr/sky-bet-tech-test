@@ -24,26 +24,26 @@ const useStyles = makeStyles(theme => ({
 
 export const App = () => {
   const host = `ws://127.0.0.1:8889/`;
-    
+
   const classes = useStyles();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(wsConnect(host));
   }, [dispatch, host]);
 
-  
+
   return (
     <Router>
       <Header />
-      <Switch>
-          <Container maxWidth="md" className={classes.container}>
-            <Grid container spacing={3} className={classes.grid}>
-              <Route exact path='/' component={HomePage}/>
-              <Route exact path='/:sport' component={LiveSport}/>
-              <Route exact path='/:sport/:eventId' component={EventDetail} />
-            </Grid>
-          </Container>
-      </Switch>
+      <Container maxWidth="md" className={classes.container} data-test-id="c-wrapper">
+        <Grid container spacing={3} className={classes.grid}>
+          <Switch>
+            <Route exact path='/' component={HomePage} />
+            <Route exact path='/:sport' component={LiveSport} />
+            <Route exact path='/:sport/:eventId' component={EventDetail} />
+          </Switch>
+        </Grid>
+      </Container>
     </Router>
   );
 }

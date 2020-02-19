@@ -27,15 +27,17 @@ const useStyles = makeStyles(theme => ({
 export const Header = () => {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar className={classes.navStyle}>
-            <img src={logo} className="App-logo" alt="logo" />
-          <Typography variant="h6" className={classes.title}>
-           Sky Bet - AJ's App
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    </div>
+    <>
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar className={classes.navStyle}>
+              <img src={logo} className="App-logo" alt="logo" />
+            <Typography variant="h6" className={classes.title}>
+            Andy Jones - SkyBet Tech Test
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </div>
+    </>
   );
 }

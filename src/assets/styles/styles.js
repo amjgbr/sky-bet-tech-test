@@ -59,5 +59,8 @@ export const useStyles = makeStyles(theme => ({
     },
     textCenter: {
         textAlign: 'center',
+    },
+    suspendedMarket: {
+        backgroundColor: theme.palette.error.main,
     }
   }));
