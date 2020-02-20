@@ -11,7 +11,7 @@ import {
   FRACTION
 } from '../constants';
 
-export const OddsFormat = ({ match, outcomeId, eventId }) => {
+export const OddsFormat = () => {
     const format = useSelector(state => state.oddsFormat);
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -23,18 +23,19 @@ export const OddsFormat = ({ match, outcomeId, eventId }) => {
       };
 
     return (
-        <div className={classes.toggleContainer}>
+        <div className={classes.toggleContainer} data-testid={'c-toggle-container'}>
           <ToggleButtonGroup
             value={format}
             exclusive
             onChange={handleChange}
             aria-label="text alignment"
             size="small"
+            data-testid={'c-toggle-button-group'}
           >
-            <ToggleButton value={DECIMAL} aria-label={DECIMAL}>
+            <ToggleButton value={DECIMAL} aria-label={DECIMAL} data-testid={'c-toggle-button-decimal'}>
               Decimal
             </ToggleButton>
-            <ToggleButton value={FRACTION} aria-label={FRACTION}>
+            <ToggleButton value={FRACTION} aria-label={FRACTION} data-testid={'c-toggle-button-fraction'}>
               Fraction
             </ToggleButton>
           </ToggleButtonGroup>
